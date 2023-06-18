@@ -57,9 +57,10 @@
   <div id="input-form-content" style="display: none;">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <form id="my-form">
+      <form id="my-form" method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" name="date" value="{{ date }}">
         <hr/>
-
         <div class="form-group">
           <label for="amount">금액:</label>
           <div class="col-md-6">
@@ -83,7 +84,7 @@
           <label for="category">카테고리:</label>
           <select name="category" class="form-control">
             {% for c in actgr %}
-            <option value="option1"> {{ c.name }} </option>
+            <option value={{c.name}}> {{ c.name }} </option>
             {% endfor %}
           </select>
         </div>
@@ -93,8 +94,9 @@
           <textarea name="memo" class="form-control"></textarea>
         </div>
         <br>
+
         <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-primary" type="button">Add</button>
+          <button class="btn btn-lg btn-primary" type="submit">Add</button>
         </div>
       </form>
     </div>

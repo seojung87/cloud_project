@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang='ko'>
-  <head>
-    <meta charset='utf-8' />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/sketchy/bootstrap.min.css">
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-    <style>
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/sketchy/bootstrap.min.css">
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <style>
     .date-button {
       border: none;
       background-color: transparent;
@@ -54,119 +54,114 @@
       top: 10px;
       right: 10px;
     }
+  </style>
 
-    </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        dayCellContent: function(info) {
+          var dayNumber = info.dayNumberText;
+          var button = document.createElement('button');
+          button.innerText = dayNumber;
+          button.classList.add('date-button');
+          return { domNodes: [button] };
+        },
+        dateClick: function(info) {
+          var date = info.date;
+          openInputForm(date);
+        },
+        events: [
+          {
+             id: 1,
+             title: 'test1',
+            start: '2023-06-23',
+            end: '2023-06-23',
+          }
+        ]
+      });
+      calendar.render();
 
-    <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           var calendarEl = document.getElementById('calendar');
-           var calendar = new FullCalendar.Calendar(calendarEl, {
-             initialView: 'dayGridMonth',
-             dayCellContent: function(info) {
-      var dayNumber = info.dayNumberText;
-      var button = document.createElement('button');
-      button.innerText = dayNumber;
-      button.classList.add('date-button');
-      return { domNodes: [button] };
-    },
-    dateClick: function(info) {
-      var date = info.date;
-      openInputForm(date);
-    }
-  });
-  calendar.render();
+      function openInputForm(date) {
+        var modalOverlay = document.createElement('div');
+        modalOverlay.classList.add('modal-overlay');
+        modalOverlay.addEventListener('click', closeModal);
 
-  function openInputForm(date) {
-  var modalOverlay = document.createElement('div');
-  modalOverlay.classList.add('modal-overlay');
-  modalOverlay.addEventListener('click', closeModal);
+        var modal = document.createElement('div');
+        modal.classList.add('modal');
 
-  var modal = document.createElement('div');
-  modal.classList.add('modal');
+        var content = document.createElement('div');
+        content.classList.add('modal-content');
 
-  var content = document.createElement('div');
-  content.classList.add('modal-content');
+        var title = document.createElement('h2');
+        title.textContent = date.getFullYear().toString() + "/" + (date.getMonth()+1).toString() + "/" + date.getDate().toString();
+        content.appendChild(title);
 
-    var title = document.createElement('h2');
-    title.textContent = date.getFullYear().toString() + "/" + (date.getMonth()+1).toString() + "/" + date.getDate().toString();
+        var closeButton = document.createElement('span');
+        closeButton.classList.add('close');
+        closeButton.innerHTML = '&times;';
+        closeButton.addEventListener('click', closeModal);
 
-    content.appendChild(title);
-    //content.classList.add('title');
-/*
-  var titleFormGroup = document.createElement('div');
-  titleFormGroup.classList.add('form-group');
-  var title = document.createElement('h2');
-  title.textContent = date.getFullYear().toString() + "/" + (date.getMonth()+1).toString() + "/" + date.getDate().toString();
-*/
+        //var form = document.createElement('form');
+        content.appendChild(closeButton);
+        modal.appendChild(content);
 
-  var closeButton = document.createElement('span');
-  closeButton.classList.add('close');
-  closeButton.innerHTML = '&times;';
-  closeButton.addEventListener('click', closeModal);
+        fetch('inputForm/')
+          .then(response => response.clone().text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-  //var form = document.createElement('form');
-    content.appendChild(closeButton);
-    modal.appendChild(content);
+            const bootstrapCSS = document.createElement('link');
+            bootstrapCSS.rel = 'stylesheet';
+            bootstrapCSS.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/sketchy/bootstrap.min.css';
+            doc.head.appendChild(bootstrapCSS);
 
-  fetch('inputForm/')
-    .then(response => response.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+            const bootstrapJS = document.createElement('script');
+            bootstrapJS.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js';
+            doc.body.appendChild(bootstrapJS);
 
-      const bootstrapCSS = document.createElement('link');
-      bootstrapCSS.rel = 'stylesheet';
-      bootstrapCSS.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/sketchy/bootstrap.min.css';
-      doc.head.appendChild(bootstrapCSS);
+            const form = doc.querySelector('form');
+            form.classList.add('form-group');
 
-      const bootstrapJS = document.createElement('script');
-      bootstrapJS.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js';
-      doc.body.appendChild(bootstrapJS);
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'date';
+            /*hiddenInput.value = date.toISOString().split('T')[0];*/
+            hiddenInput.value = date.getFullYear().toString() + "-" + (date.getMonth()+1).toString() + "-" + date.getDate().toString();
+            form.appendChild(hiddenInput);
 
-      const form = doc.querySelector('form');
-      form.classList.add('form-group');
-      content.appendChild(form);
-      //document.getElementById('input-form-content').style.display = 'block';
-      //document.getElementById('input-form-content').appendChild(form);
-      //document.getElementById('input-form-content').classList.add('modal-content');
+            content.appendChild(form);
+            document.body.appendChild(modalOverlay);
+            document.body.appendChild(modal);
+          })
+          .catch(error => {
+            console.error('Error fetching inputForm.html:', error);
+          });
+      }
 
-      document.body.appendChild(modalOverlay);
-      document.body.appendChild(modal);
-    })
-    .catch(error => {
-      console.error('Error fetching inputForm.html:', error);
+      function closeModal() {
+        var modalOverlay = document.querySelector('.modal-overlay');
+        var modal = document.querySelector('.modal');
+        modalOverlay.parentNode.removeChild(modalOverlay);
+        modal.parentNode.removeChild(modal);
+      }
     });
+  </script>
+</head>
 
-  //form.appendChild(title);
+<body>
+  {% include 'cashbook/navbar.html' %}
 
-/*  content.appendChild(closeButton);
-  modal.appendChild(content);
+<!--  {% for a in acash %}
+  <p value={{a.amount}}> {{ a.date | date:'Y-m-d' }} </p>
+  {% endfor %}-->
+  <div class="container border p-3">
+    <div id='calendar' style="max-height: fit-content;  margin: 0 auto;"></div>
+  </div>
 
-
-  document.body.appendChild(modalOverlay);
-  document.body.appendChild(modal);*/
-}
-
-function closeModal() {
-  var modalOverlay = document.querySelector('.modal-overlay');
-  var modal = document.querySelector('.modal');
-  modalOverlay.parentNode.removeChild(modalOverlay);
-  modal.parentNode.removeChild(modal);
-}
-
-
-});
-
-    </script>
-  </head>
-  <body>
-    {% include 'cashbook/navbar.html' %}
-
-    <div class="container border p-3">
-        <div id='calendar' style="max-width: 1000px; margin: 0 auto;"></div>
-    </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  </body>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
 </html>
