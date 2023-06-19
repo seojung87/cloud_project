@@ -18,10 +18,23 @@
           <a class="nav-link" href="/about_me/">About</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <div id="user-tools">
+        <form class="d-flex" action="">
+          {% if user.is_authenticated %}
+          <p style="color: #E6E6E6" class="me-sm-2">WELCOME, </p>
+          <a style="color: #E6E6E6" class="me-sm-1">사용자 이름</a>
+          {% endif %}
+            <button class="btn btn-secondary my-2 my-sm-0 mx-3" type="submit">
+          {% if user.is_authenticated %}
+              Log out
+          {% else %}
+              Log in
+          {% endif %}
+            </button>
+        </form>
+      </div>
+
+
     </div>
   </div>
 </nav>

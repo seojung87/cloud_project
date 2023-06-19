@@ -2,13 +2,14 @@ import json
 
 from django.http import JsonResponse
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
 from django.views.generic.edit import DeleteView
 from .models import Cash, Category
 from datetime import datetime
 
 # Create your views here.
+@login_required
 def main(request):
     acash = Cash.objects.all()
     events = []
