@@ -1,5 +1,17 @@
-  {% extends 'cashbook/base.html' %}
+{% extends 'cashbook/base.html' %}
 
-  {% block main_area %}
-      <h1>통계</h1>
-  {% endblock %}
+{% block main_area %}
+<div class="col-md-12 col-xl-8 p-3" style="width: 60%; max-width: 70%; margin: 10px auto;">
+    <div class="card">
+        <div class="card-header border p-3">
+            <h3>Chart</h3>
+        </div>
+        <div class="card-block">
+            <div id="container">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

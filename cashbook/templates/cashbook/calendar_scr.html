@@ -1,5 +1,8 @@
+<style>
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+    }
 
-  <style>
     .date-button {
       border: none;
       background-color: transparent;
@@ -49,7 +52,7 @@
       top: 10px;
       right: 10px;
     }
-  </style>
+</style>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -103,6 +106,7 @@
       var events = JSON.parse('{{ events_json|escapejs }}');
       for (var i = 0; i < events.length; i++) {
         var event = events[i];
+        console.log(event.stat);
         var eventColor = event.stat? 'green' : 'red';
         calendar.addEvent({
           id: event.id,

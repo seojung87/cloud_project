@@ -52,7 +52,7 @@ def input_form(request):
             memo=memo,
             date=date,
         )
-        cash.status = status
+        cash.stat = status
         cash.save()
 
         return redirect('/cashbook/')
