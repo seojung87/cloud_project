@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cashbook',
     'expense_chart',
+    'landing',
 
     #boot-strap
     "django_bootstrap5",
