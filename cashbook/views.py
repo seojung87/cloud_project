@@ -1,17 +1,35 @@
+import json
+
+from django.http import JsonResponse
+
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.shortcuts import get_object_or_404
+from django.views.generic.edit import DeleteView
 from .models import Cash, Category
 from datetime import datetime
 
 # Create your views here.
 def main(request):
     acash = Cash.objects.all()
+    events = []
+
+    for cash in acash:
+        event = {
+            'id': cash.pk,
+            'title': cash.amount,
+            'date': cash.date.strftime('%Y-%m-%d'),
+            'stat': cash.stat,
+        }
+        events.append(event)
+
+    events_json = json.dumps(events)
 
     return render(
         request,
         'cashbook/main.html',
         {
             'acash' : acash,
+            'events_json' : events_json,
         }
     )
 
@@ -26,17 +44,18 @@ def input_form(request):
         date_str = request.POST.get('date')
 
         category = Category.objects.get(name=category_name)
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
 
         cash = Cash.objects.create(
             amount=amount,
             category=category,
             memo=memo,
-            date=date_str,
+            date=date,
         )
         cash.status = status
         cash.save()
 
-        return redirect('cashbook/')
+        return redirect('/cashbook/')
 
     return render(
         request,
@@ -45,3 +64,20 @@ def input_form(request):
             'actgr' : actgr
         }
     )
+
+class DeleteEvent(DeleteView):
+    model = Cash
+    success_url = '/cashbook/'
+
+
+def delete_event(request, pk):
+    if request.method == 'POST':
+        try:
+            cash = Cash.objects.get(id=pk)
+            cash.delete()
+
+            return JsonResponse({'success': True})
+        except Cash.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Cash object not found.'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method.'})

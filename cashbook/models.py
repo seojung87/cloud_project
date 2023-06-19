@@ -6,9 +6,13 @@ class Category(models.Model):
 
 class Cash(models.Model):
     amount = models.IntegerField()
+    stat = models.BooleanField(default=False)
     date = models.DateField()
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
-    memo = models.TextField()
+    memo = models.TextField(null=True)
+
+    def get_absolute_url(self):
+        return f'/blog/{self.pk}/'
 
 
 
