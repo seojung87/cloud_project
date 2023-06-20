@@ -1,5 +1,10 @@
   {% extends 'cashbook/base.html' %}
 
+
+  {% block head_area %}
+    {% include 'cashbook/calendar_scr.html' %}
+  {% endblock %}
+
   {% block main_area %}
         <div class="container p-0" style="width: 80%; max-width: 90%; margin: 10px auto; background-color: #FFFFFF;">
           <div class="card p-3">
