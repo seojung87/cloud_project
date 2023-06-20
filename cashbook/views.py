@@ -17,7 +17,7 @@ def main(request):
     for cash in acash:
         event = {
             'id': cash.pk,
-            'title': cash.amount,
+            'title': "["+cash.category.name+"]  " + str(cash.amount),
             'date': cash.date.strftime('%Y-%m-%d'),
             'stat': cash.stat,
         }

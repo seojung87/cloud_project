@@ -60,6 +60,309 @@
   }]
 });
 
+  // Create the chart
+  var ct1 = JSON.parse('{{ ct1|escapejs }}');
+  var ct2 = JSON.parse('{{ ct2|escapejs }}');
+  var ct3 = JSON.parse('{{ ct3|escapejs }}');
+  var ct4 = JSON.parse('{{ ct4|escapejs }}');
+  var ct5 = JSON.parse('{{ ct5|escapejs }}');
+  var ct6 = JSON.parse('{{ ct6|escapejs }}');
+  var ct7 = JSON.parse('{{ ct7|escapejs }}');
+  var ct8 = JSON.parse('{{ ct8|escapejs }}');
+  var ct9 = JSON.parse('{{ ct9|escapejs }}');
+  var total_sum = JSON.parse('{{ total_sum|escapejs }}');
+  Highcharts.chart('additional-container', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market shares. January, 2022',
+        align: 'left'
+    },
+    accessibility: {
+        announceNewData: {
+            enabled: true
+        },
+        point: {
+            valueSuffix: '%'
+        }
+    },
+
+    plotOptions: {
+        series: {
+            borderRadius: 5,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}: {point.y:.1f}%'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+    },
+
+    series: [
+        {
+            name: 'Categories',
+            colorByPoint: true,
+            data: [
+                {
+                    name: '식비',
+                    y: ct1/total_sum*100,
+                    drilldown: '식비'
+                },
+                {
+                    name: '교통비',
+                    y: ct2/total_sum*100,
+                    drilldown: '교통비'
+                },
+                {
+                    name: '문화생활',
+                    y: ct3/total_sum*100,
+                    drilldown: '문화생활'
+                },
+                {
+                    name: '생필품',
+                    y: ct4/total_sum*100,
+                    drilldown: '생필품'
+                },
+                {
+                    name: '의류',
+                    y: ct5/total_sum*100,
+                    drilldown: '의류'
+                },
+                {
+                    name: '미용',
+                    y: ct6/total_sum*100,
+                    drilldown: '미용'
+                },
+                {
+                    name: '교육',
+                    y: ct7/total_sum*100,
+                    drilldown: '교육'
+                },
+                {
+                    name: '저축',
+                    y: ct8/total_sum*100,
+                    drilldown: '저축'
+                },
+                {
+                    name: '카드대금',
+                    y: ct9/total_sum*100,
+                    drilldown: '카드대금'
+                },
+            ]
+        }
+    ],
+    drilldown: {
+        series: [
+            {
+                name: 'ch',
+                id: 'ch',
+                data: [
+                    [
+                        'v97.0',
+                        36.89
+                    ],
+                    [
+                        'v96.0',
+                        18.16
+                    ],
+                    [
+                        'v95.0',
+                        0.54
+                    ],
+                    [
+                        'v94.0',
+                        0.7
+                    ],
+                    [
+                        'v93.0',
+                        0.8
+                    ],
+                    [
+                        'v92.0',
+                        0.41
+                    ],
+                    [
+                        'v91.0',
+                        0.31
+                    ],
+                    [
+                        'v90.0',
+                        0.13
+                    ],
+                    [
+                        'v89.0',
+                        0.14
+                    ],
+                    [
+                        'v88.0',
+                        0.1
+                    ],
+                    [
+                        'v87.0',
+                        0.35
+                    ],
+                    [
+                        'v86.0',
+                        0.17
+                    ],
+                    [
+                        'v85.0',
+                        0.18
+                    ],
+                    [
+                        'v84.0',
+                        0.17
+                    ],
+                    [
+                        'v83.0',
+                        0.21
+                    ],
+                    [
+                        'v81.0',
+                        0.1
+                    ],
+                    [
+                        'v80.0',
+                        0.16
+                    ],
+                    [
+                        'v79.0',
+                        0.43
+                    ],
+                    [
+                        'v78.0',
+                        0.11
+                    ],
+                    [
+                        'v76.0',
+                        0.16
+                    ],
+                    [
+                        'v75.0',
+                        0.15
+                    ],
+                    [
+                        'v72.0',
+                        0.14
+                    ],
+                    [
+                        'v70.0',
+                        0.11
+                    ],
+                    [
+                        'v69.0',
+                        0.13
+                    ],
+                    [
+                        'v56.0',
+                        0.12
+                    ],
+                    [
+                        'v49.0',
+                        0.17
+                    ]
+                ]
+            },
+            {
+                name: 'Safari',
+                id: 'Safari',
+                data: [
+                    [
+                        'v15.3',
+                        0.1
+                    ],
+                    [
+                        'v15.2',
+                        2.01
+                    ],
+                    [
+                        'v15.1',
+                        2.29
+                    ],
+                    [
+                        'v15.0',
+                        0.49
+                    ],
+                    [
+                        'v14.1',
+                        2.48
+                    ],
+                    [
+                        'v14.0',
+                        0.64
+                    ],
+                    [
+                        'v13.1',
+                        1.17
+                    ],
+                    [
+                        'v13.0',
+                        0.13
+                    ],
+                    [
+                        'v12.1',
+                        0.16
+                    ]
+                ]
+            },
+            {
+                name: 'Edge',
+                id: 'Edge',
+                data: [
+                    [
+                        'v97',
+                        6.62
+                    ],
+                    [
+                        'v96',
+                        2.55
+                    ],
+                    [
+                        'v95',
+                        0.15
+                    ]
+                ]
+            },
+            {
+                name: 'Firefox',
+                id: 'Firefox',
+                data: [
+                    [
+                        'v96.0',
+                        4.17
+                    ],
+                    [
+                        'v95.0',
+                        3.33
+                    ],
+                    [
+                        'v94.0',
+                        0.11
+                    ],
+                    [
+                        'v91.0',
+                        0.23
+                    ],
+                    [
+                        'v78.0',
+                        0.16
+                    ],
+                    [
+                        'v52.0',
+                        0.15
+                    ]
+                ]
+            }
+        ]
+    }
+});
+
+
 </script>
 
 

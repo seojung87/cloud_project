@@ -72,14 +72,13 @@
         },
         eventClick: function(info) {
           if (confirm("이벤트를 삭제하시겠습니까?")) {
-            // 여기에 삭제된 이벤트 정보를 서버로 전송하는 코드를 추가할 수 있습니다.
             var pk = info.event.id;
 
             fetch('deleteEvent/' + pk + "/", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}' // Django에서 CSRF 보호를 사용하고 있다면 해당 토큰을 전송합니다.
+                'X-CSRFToken': '{{ csrf_token }}'
               },
             })
             .then(response => response.json())
@@ -107,7 +106,7 @@
       for (var i = 0; i < events.length; i++) {
         var event = events[i];
         console.log(event.stat);
-        var eventColor = event.stat? 'green' : 'red';
+        var eventColor = event.stat? '#5FB404' : '#FA5858';
         calendar.addEvent({
           id: event.id,
           title: event.title,
@@ -147,15 +146,6 @@
           .then(html => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-
-/*            const bootstrapCSS = document.createElement('link');
-            bootstrapCSS.rel = 'stylesheet';
-            bootstrapCSS.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/sketchy/bootstrap.min.css';
-            doc.head.appendChild(bootstrapCSS);
-
-            const bootstrapJS = document.createElement('script');
-            bootstrapJS.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js';
-            doc.body.appendChild(bootstrapJS);*/
 
             const form = doc.querySelector('form');
             form.classList.add('form-group');
