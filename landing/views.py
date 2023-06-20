@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
 # Create your views here.
 def landing(request):
@@ -12,3 +13,7 @@ def about_me(request):
         request,
         'landing/about_me.html'
     )
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')  # 로그아웃 후 리디렉션할 URL 지정

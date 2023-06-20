@@ -18,23 +18,26 @@
           <a class="nav-link" href="/about_me/">About</a>
         </li>
       </ul>
-      <div id="user-tools">
-        <form class="d-flex" action="">
-          {% if user.is_authenticated %}
-          <p style="color: #E6E6E6" class="me-sm-2">WELCOME, </p>
-          <a style="color: #E6E6E6" class="me-sm-1">사용자 이름</a>
-          {% endif %}
-            <button class="btn btn-secondary my-2 my-sm-0 mx-3" type="submit">
-          {% if user.is_authenticated %}
-              Log out
-          {% else %}
+      <div id="user-tools" class="d-flex">
+          <div class="d-flex">
+            {% if user.is_authenticated %}
+            <p style="color: #E6E6E6" class="me-sm-2">WELCOME, </p>
+            <a style="color: #E6E6E6" class="me-sm-1">{{ user.username }}</a>
+            {% endif %}
+          </div>
+          <form class="d-flex" action="../logout">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <button class="btn btn-secondary my-2 my-sm-0 mx-3" type="submit">
+                Log out
+              </button>
+            {% else %}
+              <button class="btn btn-secondary my-2 my-sm-0 mx-3" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
               Log in
-          {% endif %}
-            </button>
+              </button>
+            {% endif %}
         </form>
       </div>
-
-
     </div>
   </div>
 </nav>
