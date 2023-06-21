@@ -1,0 +1,32 @@
+{% extends 'cashbook/base.html' %}
+
+{% block main_area %}
+<div class="col-md-12 col-xl-8 p-2" style="width: 40%; max-width: 50%; margin: 10px auto;">
+    <div class="card">
+        <div class="card-header text-center border p-3">
+            <h2>LOGIN</h2>
+        </div>
+        <div class="card-block">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group mx-5 mb-2">
+<!--                <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" placeholder="Enter Username">-->
+                    <label for="{{ form.username.id_for_label }}" class="col-form-label mt-4">Username  </label>
+                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" placeholder="Enter Username">
+                </div>
+                <div class="form-group mx-5 mt-2">
+<!--                <input type="text" class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.id_for_label }}" placeholder="Enter Password">-->
+                    <label for="{{ form.password.id_for_label }}" class="col-form-label mt-4">Password  </label>
+                    <input type="text" class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" placeholder="Enter Username">
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

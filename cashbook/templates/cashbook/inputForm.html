@@ -81,9 +81,9 @@
 
         <div class="form-group">
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="True" onclick="reload_func()">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="True">
             <label class="btn btn-outline-primary" for="btnradio1">수입</label>
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="False" checked="" onclick="alert('plz')">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="False" checked>
             <label class="btn btn-outline-primary" for="btnradio2">지출</label>
           </div>
         </div>
@@ -92,7 +92,11 @@
         <div class="form-group">
           <label for="category">카테고리:</label>
           <select id="category-select" name="category" class="form-control">
-            {% if btnradio1.checked %}
+            {% for c in actgr %}
+              <option value={{c.name}}> {{ c.name }} </option>
+            {% endfor %}
+
+<!--        {% if btnradio1.checked %}
               {% for c in category_in %}
               <option value={{c.name}}> {{ c.name }} </option>
               {% endfor %}
@@ -100,7 +104,8 @@
               {% for c in category_out %}
               <option value={{c.name}}> {{ c.name }} </option>
               {% endfor %}
-            {% endif %}
+            {% endif %}-->
+
           </select>
         </div>
 

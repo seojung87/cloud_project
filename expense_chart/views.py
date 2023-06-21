@@ -101,7 +101,7 @@ def category_sum(c1,c2,c3,c4,c5,c6,c7,c8,c9):
     total_sum = c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9
     return total_sum
 
-@login_required
+@login_required(login_url='/login/')
 def mainchart(request):
     year = datetime.now().year
     month = datetime.now().month
@@ -153,6 +153,5 @@ def mainchart(request):
             'ct8': ct8,
             'ct9': ct9,
             'total_sum': total_sum,
-
         }
     )

@@ -9,7 +9,7 @@ from .models import Cash, Category
 from datetime import datetime
 
 # Create your views here.
-@login_required
+@login_required(login_url='/login/')
 def main(request):
     acash = Cash.objects.all()
     events = []
@@ -103,3 +103,4 @@ def delete_event(request, pk):
             return JsonResponse({'success': False, 'error': 'Cash object not found.'})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
