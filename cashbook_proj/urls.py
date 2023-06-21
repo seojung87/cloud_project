@@ -22,4 +22,5 @@ urlpatterns = [
     path('cashbook/', include('cashbook.urls')),
     path('expense_chart/', include('expense_chart.urls')),
     path('', include('landing.urls')),
+    path('accounts/', include('allauth.urls')),
 ]

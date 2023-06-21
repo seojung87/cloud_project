@@ -20,6 +20,9 @@ def main(request):
             'title': "["+cash.category.name+"]  " + str(cash.amount),
             'date': cash.date.strftime('%Y-%m-%d'),
             'stat': cash.stat,
+            'extendedProps': {
+            'memo': cash.memo,
+            },
         }
         events.append(event)
 
@@ -34,8 +37,24 @@ def main(request):
         }
     )
 
+
+def category_div_in():
+    categories = ["월급", "용돈"]
+    cate_in = Category.objects.filter(name__in=categories).values('name')
+    return cate_in
+
+def category_div_out():
+    categories = ["식비", "교통비", "문화생활", "생필품", "의류", "미용", "교육", "저축", "카드대금"]
+    cate_out = Category.objects.filter(name__in=categories).values('name')
+    return cate_out
+
 def input_form(request):
     actgr = Category.objects.all()
+
+    category_in = category_div_in()
+    json.dumps(list(category_in))
+    category_out = category_div_out()
+    json.dumps(list(category_out))
 
     if request.method == 'POST':
         amount = request.POST.get('amount')
@@ -62,7 +81,9 @@ def input_form(request):
         request,
         'cashbook/inputForm.html',
         {
-            'actgr' : actgr
+            'actgr' : actgr,
+            'category_in' : category_in,
+            'category_out' : category_out,
         }
     )
 

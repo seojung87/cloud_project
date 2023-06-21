@@ -99,6 +99,12 @@
             });
           }
         },
+        eventDidMount: function (info) {
+          var memo = info.event.extendedProps.memo;
+          tippy(info.el, {
+            content: "memo : " + memo
+          });
+        },
       });
       calendar.render();
 
@@ -107,6 +113,11 @@
         var event = events[i];
         console.log(event.stat);
         var eventColor = event.stat? '#5FB404' : '#FA5858';
+        var memo = event.extendedProps.memo;
+        if (!memo) {
+          memo = 'none';
+        }
+
         calendar.addEvent({
           id: event.id,
           title: event.title,
@@ -114,6 +125,7 @@
           end: event.date,
           backgroundColor: eventColor,
           borderColor: eventColor,
+          memo : memo,
         });
       }
 
